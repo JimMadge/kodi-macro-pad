@@ -1,3 +1,6 @@
 [submodule "keybow2040-circuitpython"]
 	path = keybow2040-circuitpython
 	url = https://github.com/pimoroni/keybow2040-circuitpython.git
+[submodule "Adafruit_CircuitPython_HID"]
+	path = Adafruit_CircuitPython_HID
+	url = https://github.com/adafruit/Adafruit_CircuitPython_HID.git

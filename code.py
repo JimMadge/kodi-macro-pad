@@ -27,13 +27,6 @@ colours = dict(
     magenta=(255, 0, 255)
 )
 
-
-# Keypad numbers
-# | 3 | 7 | 11 | 15 |
-# | 2 | 6 | 10 | 14 |
-# | 1 | 5 | 9  | 13 |
-# | 0 | 4 | 8  | 12 |
-
 # Kodi keyboard controls
 # https://kodi.wiki/view/Keyboard_controls
 kodi_keymap = {
@@ -55,7 +48,14 @@ kodi_keymap = {
     "stop": Keycode.X
 }
 
-# layer select keys
+# Define action and layer selection keys
+# Keypad numbers
+# | 3 | 7 | 11 | 15 |
+# | 2 | 6 | 10 | 14 |
+# | 1 | 5 | 9  | 13 |
+# | 0 | 4 | 8  | 12 |
+
+# Layer selection keys
 layer_select_keys = {
     0: 0,
     4: 1,
@@ -68,44 +68,6 @@ action_keys = [1, 2, 3,
                5, 6, 7,
                9, 10, 11,
                13, 14, 15]
-
-# Layer mimicking Kodi Kore app remote plus volume
-# | context | up     | information | vol+ |
-# | left    | select | right       | vol- |
-# | back    | down   | menu        | mute |
-remote_layer_keys = {
-    1: kodi_keymap["back"],
-    2: kodi_keymap["left"],
-    3: kodi_keymap["context menu"],
-    5: kodi_keymap["down"],
-    6: kodi_keymap["select"],
-    7: kodi_keymap["up"],
-    9: kodi_keymap["menu"],
-    10: kodi_keymap["right"],
-    11: kodi_keymap["information"],
-    13: kodi_keymap["mute"],
-    14: kodi_keymap["vol-"],
-    15: kodi_keymap["vol+"]
-}
-
-remote_layer_colours = [
-    colours["green"],
-    colours["cyan"],
-    colours["blue"],
-    colours["cyan"],
-    colours["off"],
-    colours["blue"],
-    colours["green"],
-    colours["blue"],
-    colours["off"],
-    colours["cyan"],
-    colours["blue"],
-    colours["cyan"],
-    colours["off"],
-    colours["red"],
-    colours["blue"],
-    colours["green"]
-]
 
 # Empty layer
 empty_layer_keys = {
@@ -143,15 +105,91 @@ empty_layer_colours = [
 ]
 
 
-# Layers
+# Layer class
 class Layer():
     def __init__(self, keys, colours):
         self.keys = keys
         self.colours = colours
 
 
+# Define layers
 layers = [
-    Layer(remote_layer_keys, remote_layer_colours),
+    # Layer mimicking Kodi Kore app remote plus volume
+    # | context | up     | information | vol+ |
+    # | left    | select | right       | vol- |
+    # | back    | down   | menu        | mute |
+    Layer(
+        keys={
+            1: kodi_keymap["back"],
+            2: kodi_keymap["left"],
+            3: kodi_keymap["context menu"],
+            5: kodi_keymap["down"],
+            6: kodi_keymap["select"],
+            7: kodi_keymap["up"],
+            9: kodi_keymap["menu"],
+            10: kodi_keymap["right"],
+            11: kodi_keymap["information"],
+            13: kodi_keymap["mute"],
+            14: kodi_keymap["vol-"],
+            15: kodi_keymap["vol+"]
+        },
+        colours=[
+            colours["green"],
+            colours["cyan"],
+            colours["blue"],
+            colours["cyan"],
+            colours["off"],
+            colours["blue"],
+            colours["green"],
+            colours["blue"],
+            colours["off"],
+            colours["cyan"],
+            colours["blue"],
+            colours["cyan"],
+            colours["off"],
+            colours["red"],
+            colours["blue"],
+            colours["green"]
+        ]
+    ),
+    # Playback control layer
+    # |        |            |              |      |
+    # | rewind | play/pause | fast forward | stop |
+    # |        |            |              |      |
+    Layer(
+        keys={
+            1: None,
+            2: kodi_keymap["rewind"],
+            3: None,
+            5: None,
+            6: kodi_keymap["play/pause"],
+            7: None,
+            9: None,
+            10: kodi_keymap["fast forward"],
+            11: None,
+            13: None,
+            14: kodi_keymap["stop"],
+            15: None
+        },
+        colours=[
+            colours["off"],
+            colours["off"],
+            colours["blue"],
+            colours["off"],
+            colours["green"],
+            colours["off"],
+            colours["green"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["blue"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["red"],
+            colours["off"],
+        ]
+    ),
     Layer(empty_layer_keys, empty_layer_colours),
     Layer(empty_layer_keys, empty_layer_colours),
     Layer(empty_layer_keys, empty_layer_colours)

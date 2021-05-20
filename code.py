@@ -262,7 +262,8 @@ for key in action_keys:
     @keybow.on_press(keys[key])  # takes argument of key object
     def press_handler(key):  # This argument is actually the key object!
         action = layers[layer].keys[key.number]
-        if isinstance(action, Keycode):
+        # Catch elements of Keycode
+        if isinstance(action, int):
             keyboard.send(action)
         # Try to catch functions, not perfect as non-functions may be callable
         elif callable(action):

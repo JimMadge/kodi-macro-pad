@@ -1,9 +1,9 @@
-import board
-from keybow2040 import Keybow2040
-import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 from adafruit_hid.keycode import Keycode
+import board
+from keybow2040 import Keybow2040
+import usb_hid
 
 # Set up Keybow
 i2c = board.I2C()
@@ -14,15 +14,19 @@ keys = keybow.keys
 keyboard = Keyboard(usb_hid.devices)
 layout = KeyboardLayoutUS(keyboard)
 
-# Colours
-c_off = (0, 0, 0)
-c_white = (255, 255, 255)
-c_red = (255, 0, 0)
-c_green = (0, 255, 0)
-c_blue = (0, 0, 255)
-c_cyan = (0, 255, 255)
-c_yellow = (255, 255, 0)
-c_magenta = (255, 0, 255)
+
+# Define colours
+colours = dict(
+    off=(0, 0, 0),
+    white=(255, 255, 255),
+    red=(255, 0, 0),
+    green=(0, 255, 0),
+    blue=(0, 0, 255),
+    cyan=(0, 255, 255),
+    yellow=(255, 255, 0),
+    magenta=(255, 0, 255)
+)
+
 
 # Keypad numbers
 # | 3 | 7 | 11 | 15 |
@@ -85,42 +89,42 @@ remote_layer_keys = {
 }
 
 remote_layer_colours = [
-    c_green,
-    c_cyan,
-    c_blue,
-    c_cyan,
-    c_off,
-    c_blue,
-    c_green,
-    c_blue,
-    c_off,
-    c_cyan,
-    c_blue,
-    c_cyan,
-    c_off,
-    c_red,
-    c_blue,
-    c_green
+    colours["green"],
+    colours["cyan"],
+    colours["blue"],
+    colours["cyan"],
+    colours["off"],
+    colours["blue"],
+    colours["green"],
+    colours["blue"],
+    colours["off"],
+    colours["cyan"],
+    colours["blue"],
+    colours["cyan"],
+    colours["off"],
+    colours["red"],
+    colours["blue"],
+    colours["green"]
 ]
 
 # Empty layer
 empty_layer_colours = [
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_off,
-    c_green,
-    c_off,
-    c_off,
-    c_off,
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
+    colours["green"],
+    colours["off"],
+    colours["off"],
+    colours["off"],
 ]
 
 

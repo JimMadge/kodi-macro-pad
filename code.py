@@ -24,7 +24,8 @@ colours = dict(
     blue=(0, 0, 255),
     cyan=(0, 255, 255),
     yellow=(255, 255, 0),
-    magenta=(255, 0, 255)
+    magenta=(255, 0, 255),
+    violet=(128, 0, 255)
 )
 
 # Kodi keyboard controls
@@ -157,20 +158,20 @@ layers = [
         },
         colours=[
             colours["green"],
-            colours["cyan"],
+            colours["violet"],
             colours["blue"],
-            colours["cyan"],
+            colours["violet"],
             colours["off"],
             colours["blue"],
-            colours["green"],
+            colours["yellow"],
             colours["blue"],
             colours["off"],
-            colours["cyan"],
+            colours["violet"],
             colours["blue"],
-            colours["cyan"],
+            colours["violet"],
             colours["off"],
             colours["red"],
-            colours["blue"],
+            colours["cyan"],
             colours["green"]
         ]
     ),
@@ -200,7 +201,7 @@ layers = [
             colours["off"],
             colours["green"],
             colours["off"],
-            colours["green"],
+            colours["yellow"],
             colours["off"],
             colours["off"],
             colours["off"],
@@ -243,12 +244,13 @@ layers = [
             colours["off"],
             colours["off"],
             colours["off"],
-            colours["blue"],
+            colours["cyan"],
             colours["green"],
         ]
     ),
     Layer(empty_layer_keys, empty_layer_colours)
 ]
+
 for key, layer in layer_select_keys.items():
     @keybow.on_press(keys[key])  # takes argument of key object
     def set_layer(key):  # This argument is actually the key object!

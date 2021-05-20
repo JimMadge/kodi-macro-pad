@@ -123,12 +123,19 @@ empty_layer_colours = [
     c_off,
 ]
 
+
 # Layers
+class Layer():
+    def __init__(self, keys, colours):
+        self.keys = keys
+        self.colours = colours
+
+
 layers = [
-    (remote_layer_keys, remote_layer_colours),
-    (remote_layer_keys, remote_layer_colours),
-    (remote_layer_keys, remote_layer_colours),
-    (remote_layer_keys, empty_layer_colours)
+    Layer(remote_layer_keys, remote_layer_colours),
+    Layer(remote_layer_keys, remote_layer_colours),
+    Layer(remote_layer_keys, remote_layer_colours),
+    Layer(remote_layer_keys, empty_layer_colours)
 ]
 
 # Set defaults
@@ -143,14 +150,14 @@ for key, layer in layer_select_keys.items():
         layer = layer_select_keys[key.number]
 
         # Set key colours
-        for key, colour in enumerate(layers[layer][1]):
+        for key, colour in enumerate(layers[layer].colours):
             scaled_colour = (elem//brightness for elem in colour)
             keybow.set_led(key, *scaled_colour)
 
 for key in action_keys:
     @keybow.on_press(keys[key])  # takes argument of key object
     def press_handler(key):  # This argument is actually the key object!
-        keyboard.send(layers[0][0][key.number])
+        keyboard.send(layers[0].keys[key.number])
 
 while True:
     keybow.update()

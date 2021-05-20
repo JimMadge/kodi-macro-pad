@@ -105,6 +105,28 @@ empty_layer_colours = [
 ]
 
 
+def set_key_colours():
+    for key, colour in enumerate(layers[layer].colours):
+        scaled_colour = (int(elem*brightness/10) for elem in colour)
+        keybow.set_led(key, *scaled_colour)
+
+
+def increase_brightness():
+    global brightness
+    brightness += 1
+    if brightness > 10:
+        brightness = 10
+    set_key_colours()
+
+
+def decrease_brightness():
+    global brightness
+    brightness -= 1
+    if brightness < 1:
+        brightness = 1
+    set_key_colours()
+
+
 # Layer class
 class Layer():
     def __init__(self, keys, colours):
@@ -190,15 +212,43 @@ layers = [
             colours["off"],
         ]
     ),
-    Layer(empty_layer_keys, empty_layer_colours),
-    Layer(empty_layer_keys, empty_layer_colours),
+    # System layer
+    Layer(
+        keys={
+            1: None,
+            2: None,
+            3: None,
+            5: None,
+            6: None,
+            7: None,
+            9: None,
+            10: None,
+            11: None,
+            13: None,
+            14: decrease_brightness,
+            15: increase_brightness
+        },
+        colours=[
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["green"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["blue"],
+            colours["green"],
+        ]
+    ),
     Layer(empty_layer_keys, empty_layer_colours)
 ]
-
-# Set defaults
-layer = 0
-brightness = 8
-
 for key, layer in layer_select_keys.items():
     @keybow.on_press(keys[key])  # takes argument of key object
     def set_layer(key):  # This argument is actually the key object!
@@ -206,17 +256,24 @@ for key, layer in layer_select_keys.items():
         global layer
         layer = layer_select_keys[key.number]
 
-        # Set key colours
-        for key, colour in enumerate(layers[layer].colours):
-            scaled_colour = (elem//brightness for elem in colour)
-            keybow.set_led(key, *scaled_colour)
+        set_key_colours()
 
 for key in action_keys:
     @keybow.on_press(keys[key])  # takes argument of key object
     def press_handler(key):  # This argument is actually the key object!
-        keycode = layers[layer].keys[key.number]
-        if keycode is not None:
-            keyboard.send(keycode)
+        action = layers[layer].keys[key.number]
+        if isinstance(action, Keycode):
+            keyboard.send(action)
+        # Try to catch functions, not perfect as non-functions may be callable
+        elif callable(action):
+            action()
+
+
+# Set defaults
+layer = 0
+# brightness [1,10]. Raw colour values are multiplied by brightness/10 and
+# rounded so that 10 represents 100% brightness and 1 10%.
+brightness = 5
 
 while True:
     keybow.update()

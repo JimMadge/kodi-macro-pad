@@ -108,6 +108,21 @@ remote_layer_colours = [
 ]
 
 # Empty layer
+empty_layer_keys = {
+    1: None,
+    2: None,
+    3: None,
+    5: None,
+    6: None,
+    7: None,
+    9: None,
+    10: None,
+    11: None,
+    13: None,
+    14: None,
+    15: None
+}
+
 empty_layer_colours = [
     colours["off"],
     colours["off"],
@@ -137,9 +152,9 @@ class Layer():
 
 layers = [
     Layer(remote_layer_keys, remote_layer_colours),
-    Layer(remote_layer_keys, remote_layer_colours),
-    Layer(remote_layer_keys, remote_layer_colours),
-    Layer(remote_layer_keys, empty_layer_colours)
+    Layer(empty_layer_keys, empty_layer_colours),
+    Layer(empty_layer_keys, empty_layer_colours),
+    Layer(empty_layer_keys, empty_layer_colours)
 ]
 
 # Set defaults
@@ -161,7 +176,9 @@ for key, layer in layer_select_keys.items():
 for key in action_keys:
     @keybow.on_press(keys[key])  # takes argument of key object
     def press_handler(key):  # This argument is actually the key object!
-        keyboard.send(layers[0].keys[key.number])
+        keycode = layers[layer].keys[key.number]
+        if keycode is not None:
+            keyboard.send(keycode)
 
 while True:
     keybow.update()

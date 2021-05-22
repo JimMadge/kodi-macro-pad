@@ -60,55 +60,6 @@ kodi_keymap = {
 # | 1 | 5 | 9  | 13 |
 # | 0 | 4 | 8  | 12 |
 
-# Layer selection keys
-layer_select_keys = {
-    0: 0,
-    4: 1,
-    8: 2,
-    12: 3
-}
-
-# Action keys
-action_keys = [1, 2, 3,
-               5, 6, 7,
-               9, 10, 11,
-               13, 14, 15]
-
-# Empty layer
-empty_layer_keys = {
-    1: None,
-    2: None,
-    3: None,
-    5: None,
-    6: None,
-    7: None,
-    9: None,
-    10: None,
-    11: None,
-    13: None,
-    14: None,
-    15: None
-}
-
-empty_layer_colours = [
-    colours["orange"],
-    colours["off"],
-    colours["off"],
-    colours["off"],
-    colours["orange"],
-    colours["off"],
-    colours["off"],
-    colours["off"],
-    colours["orange"],
-    colours["off"],
-    colours["off"],
-    colours["off"],
-    colours["green"],
-    colours["off"],
-    colours["off"],
-    colours["off"],
-]
-
 
 def set_key_colours():
     for key, colour in enumerate(layers[layer].colours):
@@ -132,6 +83,16 @@ def decrease_brightness():
     set_key_colours()
 
 
+def select_layer(layer_no):
+    def set_layer():
+        global layer
+        layer = layer_no
+
+        set_key_colours()
+
+    return set_layer
+
+
 # Layer class
 class Layer():
     def __init__(self, keys, colours):
@@ -147,15 +108,19 @@ layers = [
     # | back    | down   | menu        | mute |
     Layer(
         keys={
+            0: select_layer(0),
             1: kodi_keymap["back"],
             2: kodi_keymap["left"],
             3: kodi_keymap["context menu"],
+            4: select_layer(1),
             5: kodi_keymap["down"],
             6: kodi_keymap["select"],
             7: kodi_keymap["up"],
+            8: select_layer(2),
             9: kodi_keymap["menu"],
             10: kodi_keymap["right"],
             11: kodi_keymap["information"],
+            12: select_layer(3),
             13: kodi_keymap["mute"],
             14: kodi_keymap["vol-"],
             15: kodi_keymap["vol+"]
@@ -185,15 +150,19 @@ layers = [
     # | rewind           | fast forward  |  | mute |
     Layer(
         keys={
+            0: select_layer(0),
             1: kodi_keymap["rewind"],
             2: kodi_keymap["play/pause"],
             3: kodi_keymap["toggle subtitles"],
+            4: select_layer(1),
             5: kodi_keymap["fast forward"],
             6: kodi_keymap["stop"],
             7: kodi_keymap["next subtitle"],
+            8: select_layer(2),
             9: None,
             10: None,
             11: None,
+            12: select_layer(3),
             13: kodi_keymap["mute"],
             14: kodi_keymap["vol-"],
             15: kodi_keymap["vol+"]
@@ -220,15 +189,19 @@ layers = [
     # System layer
     Layer(
         keys={
+            0: select_layer(0),
             1: None,
             2: None,
             3: kodi_keymap["shutdown menu"],
+            4: select_layer(1),
             5: None,
             6: None,
             7: None,
+            8: select_layer(2),
             9: None,
             10: (Keycode.CONTROL, Keycode.ALT, Keycode.DOWN_ARROW),
             11: (Keycode.CONTROL, Keycode.ALT, Keycode.UP_ARROW),
+            12: select_layer(3),
             13: None,
             14: decrease_brightness,
             15: increase_brightness
@@ -252,19 +225,48 @@ layers = [
             colours["green"],
         ]
     ),
-    Layer(empty_layer_keys, empty_layer_colours)
+    # Empty layer
+    Layer(
+        keys={
+            0: select_layer(0),
+            1: None,
+            2: None,
+            3: None,
+            4: select_layer(1),
+            5: None,
+            6: None,
+            7: None,
+            8: select_layer(2),
+            9: None,
+            10: None,
+            11: None,
+            12: select_layer(3),
+            13: None,
+            14: None,
+            15: None
+        },
+        colours=[
+            colours["orange"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["orange"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["orange"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+            colours["green"],
+            colours["off"],
+            colours["off"],
+            colours["off"],
+        ]
+    )
 ]
 
-for key, layer in layer_select_keys.items():
-    @keybow.on_press(keys[key])  # takes argument of key object
-    def set_layer(key):  # This argument is actually the key object!
-        # Set layer variable
-        global layer
-        layer = layer_select_keys[key.number]
-
-        set_key_colours()
-
-for key in action_keys:
+for key in range(16):
     @keybow.on_press(keys[key])  # takes argument of key object
     def press_handler(key):  # This argument is actually the key object!
         action = layers[layer].keys[key.number]

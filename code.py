@@ -227,8 +227,8 @@ layers = [
             6: None,
             7: None,
             9: None,
-            10: None,
-            11: None,
+            10: (Keycode.CONTROL, Keycode.ALT, Keycode.DOWN_ARROW),
+            11: (Keycode.CONTROL, Keycode.ALT, Keycode.UP_ARROW),
             13: None,
             14: decrease_brightness,
             15: increase_brightness
@@ -244,8 +244,8 @@ layers = [
             colours["off"],
             colours["green"],
             colours["off"],
-            colours["off"],
-            colours["off"],
+            colours["blue"],
+            colours["blue"],
             colours["orange"],
             colours["off"],
             colours["cyan"],
@@ -271,6 +271,9 @@ for key in action_keys:
         # Catch elements of Keycode
         if isinstance(action, int):
             keyboard.send(action)
+        # Try to Catch a tuple of Keycodes
+        elif isinstance(action, tuple):
+            keyboard.send(*action)
         # Try to catch functions, not perfect as non-functions may be callable
         elif callable(action):
             action()

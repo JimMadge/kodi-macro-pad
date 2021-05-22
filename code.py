@@ -25,7 +25,8 @@ colours = dict(
     cyan=(0, 255, 255),
     yellow=(255, 255, 0),
     magenta=(255, 0, 255),
-    violet=(128, 0, 255)
+    violet=(128, 0, 255),
+    orange=(255, 128, 0)
 )
 
 # Kodi keyboard controls
@@ -90,15 +91,15 @@ empty_layer_keys = {
 }
 
 empty_layer_colours = [
+    colours["orange"],
     colours["off"],
     colours["off"],
     colours["off"],
+    colours["orange"],
     colours["off"],
     colours["off"],
     colours["off"],
-    colours["off"],
-    colours["off"],
-    colours["off"],
+    colours["orange"],
     colours["off"],
     colours["off"],
     colours["off"],
@@ -164,15 +165,15 @@ layers = [
             colours["violet"],
             colours["blue"],
             colours["violet"],
-            colours["off"],
+            colours["orange"],
             colours["blue"],
             colours["yellow"],
             colours["blue"],
-            colours["off"],
+            colours["orange"],
             colours["violet"],
             colours["blue"],
             colours["violet"],
-            colours["off"],
+            colours["orange"],
             colours["red"],
             colours["cyan"],
             colours["green"]
@@ -198,7 +199,7 @@ layers = [
             15: kodi_keymap["vol+"]
         },
         colours=[
-            colours["off"],
+            colours["orange"],
             colours["blue"],
             colours["green"],
             colours["yellow"],
@@ -206,11 +207,11 @@ layers = [
             colours["blue"],
             colours["red"],
             colours["magenta"],
+            colours["orange"],
             colours["off"],
             colours["off"],
             colours["off"],
-            colours["off"],
-            colours["off"],
+            colours["orange"],
             colours["red"],
             colours["cyan"],
             colours["green"]
@@ -233,11 +234,11 @@ layers = [
             15: increase_brightness
         },
         colours=[
-            colours["off"],
+            colours["orange"],
             colours["off"],
             colours["off"],
             colours["red"],
-            colours["off"],
+            colours["orange"],
             colours["off"],
             colours["off"],
             colours["off"],
@@ -245,7 +246,7 @@ layers = [
             colours["off"],
             colours["off"],
             colours["off"],
-            colours["off"],
+            colours["orange"],
             colours["off"],
             colours["cyan"],
             colours["green"],

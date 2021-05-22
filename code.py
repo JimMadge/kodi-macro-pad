@@ -48,7 +48,8 @@ kodi_keymap = {
     "rewind": Keycode.R,
     "stop": Keycode.X,
     "toggle subtitles": Keycode.T,
-    "next subtitle": Keycode.L
+    "next subtitle": Keycode.L,
+    "shutdown menu": Keycode.S
 }
 
 # Define action and layer selection keys
@@ -220,7 +221,7 @@ layers = [
         keys={
             1: None,
             2: None,
-            3: None,
+            3: kodi_keymap["shutdown menu"],
             5: None,
             6: None,
             7: None,
@@ -235,7 +236,7 @@ layers = [
             colours["off"],
             colours["off"],
             colours["off"],
-            colours["off"],
+            colours["red"],
             colours["off"],
             colours["off"],
             colours["off"],

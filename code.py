@@ -95,9 +95,27 @@ def select_layer(layer_no):
 
 # Layer class
 class Layer():
-    def __init__(self, keys, colours):
-        self.keys = keys
-        self.colours = colours
+    def __init__(self, key_specification):
+        # key_specification is an ordered list of key definitions.
+        # The items of key_specification can be None for an unused key or a
+        # tuple of (action, colour) where action is a keycode(int), tuple of
+        # keycodes or function and colour is a tuple of three integers 0-255
+        # representing the red, green and blue channels respectively.
+
+        # Initialise actions and colours
+        self.keys = []
+        self.colours = []
+
+        for key_no, item in enumerate(key_specification):
+            if item is None:
+                # Empty key
+                self.keys.append(None)
+                self.colours.append(colours["off"])
+            elif isinstance(item, tuple):
+                # Assign key action and colour
+                action, colour = item
+                self.keys.append(action)
+                self.colours.append(colour)
 
 
 # Define layers
@@ -107,41 +125,23 @@ layers = [
     # | left    | select | right       | vol- |
     # | back    | down   | menu        | mute |
     Layer(
-        keys={
-            0: select_layer(0),
-            1: kodi_keymap["back"],
-            2: kodi_keymap["left"],
-            3: kodi_keymap["context menu"],
-            4: select_layer(1),
-            5: kodi_keymap["down"],
-            6: kodi_keymap["select"],
-            7: kodi_keymap["up"],
-            8: select_layer(2),
-            9: kodi_keymap["menu"],
-            10: kodi_keymap["right"],
-            11: kodi_keymap["information"],
-            12: select_layer(3),
-            13: kodi_keymap["mute"],
-            14: kodi_keymap["vol-"],
-            15: kodi_keymap["vol+"]
-        },
-        colours=[
-            colours["green"],
-            colours["violet"],
-            colours["blue"],
-            colours["violet"],
-            colours["orange"],
-            colours["blue"],
-            colours["yellow"],
-            colours["blue"],
-            colours["orange"],
-            colours["violet"],
-            colours["blue"],
-            colours["violet"],
-            colours["orange"],
-            colours["red"],
-            colours["cyan"],
-            colours["green"]
+        [
+            (select_layer(0),             colours["green"]),
+            (kodi_keymap["back"],         colours["violet"]),
+            (kodi_keymap["left"],         colours["blue"]),
+            (kodi_keymap["context menu"], colours["violet"]),
+            (select_layer(1),             colours["orange"]),
+            (kodi_keymap["down"],         colours["blue"]),
+            (kodi_keymap["select"],       colours["yellow"]),
+            (kodi_keymap["up"],           colours["blue"]),
+            (select_layer(2),             colours["orange"]),
+            (kodi_keymap["menu"],         colours["violet"]),
+            (kodi_keymap["right"],        colours["blue"]),
+            (kodi_keymap["information"],  colours["violet"]),
+            (select_layer(3),             colours["orange"]),
+            (kodi_keymap["mute"],         colours["red"]),
+            (kodi_keymap["vol-"],         colours["cyan"]),
+            (kodi_keymap["vol+"],         colours["green"])
         ]
     ),
     # Playback control layer
@@ -149,119 +149,71 @@ layers = [
     # | play/pause       | stop          |  | vol- |
     # | rewind           | fast forward  |  | mute |
     Layer(
-        keys={
-            0: select_layer(0),
-            1: kodi_keymap["rewind"],
-            2: kodi_keymap["play/pause"],
-            3: kodi_keymap["toggle subtitles"],
-            4: select_layer(1),
-            5: kodi_keymap["fast forward"],
-            6: kodi_keymap["stop"],
-            7: kodi_keymap["next subtitle"],
-            8: select_layer(2),
-            9: None,
-            10: None,
-            11: None,
-            12: select_layer(3),
-            13: kodi_keymap["mute"],
-            14: kodi_keymap["vol-"],
-            15: kodi_keymap["vol+"]
-        },
-        colours=[
-            colours["orange"],
-            colours["blue"],
-            colours["green"],
-            colours["yellow"],
-            colours["green"],
-            colours["blue"],
-            colours["red"],
-            colours["magenta"],
-            colours["orange"],
-            colours["off"],
-            colours["off"],
-            colours["off"],
-            colours["orange"],
-            colours["red"],
-            colours["cyan"],
-            colours["green"]
+        [
+            (select_layer(0),                 colours["orange"]),
+            (kodi_keymap["rewind"],           colours["blue"]),
+            (kodi_keymap["play/pause"],       colours["green"]),
+            (kodi_keymap["toggle subtitles"], colours["yellow"]),
+            (select_layer(1),                 colours["green"]),
+            (kodi_keymap["fast forward"],     colours["blue"]),
+            (kodi_keymap["stop"],             colours["red"]),
+            (kodi_keymap["next subtitle"],    colours["magenta"]),
+            (select_layer(2),                 colours["orange"]),
+            None,
+            None,
+            None,
+            (select_layer(3),                 colours["orange"]),
+            (kodi_keymap["mute"],             colours["red"]),
+            (kodi_keymap["vol-"],             colours["cyan"]),
+            (kodi_keymap["vol+"],             colours["green"])
         ]
     ),
     # System layer
     Layer(
-        keys={
-            0: select_layer(0),
-            1: None,
-            2: None,
-            3: kodi_keymap["shutdown menu"],
-            4: select_layer(1),
-            5: None,
-            6: None,
-            7: None,
-            8: select_layer(2),
-            9: None,
-            10: (Keycode.CONTROL, Keycode.ALT, Keycode.DOWN_ARROW),
-            11: (Keycode.CONTROL, Keycode.ALT, Keycode.UP_ARROW),
-            12: select_layer(3),
-            13: None,
-            14: decrease_brightness,
-            15: increase_brightness
-        },
-        colours=[
-            colours["orange"],
-            colours["off"],
-            colours["off"],
-            colours["red"],
-            colours["orange"],
-            colours["off"],
-            colours["off"],
-            colours["off"],
-            colours["green"],
-            colours["off"],
-            colours["blue"],
-            colours["blue"],
-            colours["orange"],
-            colours["off"],
-            colours["cyan"],
-            colours["green"],
+        [
+            (select_layer(0),              colours["orange"]),
+            None,
+            None,
+            (kodi_keymap["shutdown menu"], colours["red"]),
+            (select_layer(1),              colours["orange"]),
+            None,
+            None,
+            None,
+            (select_layer(2),              colours["green"]),
+            None,
+            (
+                (Keycode.CONTROL, Keycode.ALT, Keycode.DOWN_ARROW),
+                colours["blue"]
+            ),
+            (
+                (Keycode.CONTROL, Keycode.ALT, Keycode.UP_ARROW),
+                colours["blue"]
+            ),
+            (select_layer(3),              colours["orange"]),
+            None,
+            (decrease_brightness,          colours["cyan"]),
+            (increase_brightness,          colours["green"])
         ]
     ),
     # Empty layer
     Layer(
-        keys={
-            0: select_layer(0),
-            1: None,
-            2: None,
-            3: None,
-            4: select_layer(1),
-            5: None,
-            6: None,
-            7: None,
-            8: select_layer(2),
-            9: None,
-            10: None,
-            11: None,
-            12: select_layer(3),
-            13: None,
-            14: None,
-            15: None
-        },
-        colours=[
-            colours["orange"],
-            colours["off"],
-            colours["off"],
-            colours["off"],
-            colours["orange"],
-            colours["off"],
-            colours["off"],
-            colours["off"],
-            colours["orange"],
-            colours["off"],
-            colours["off"],
-            colours["off"],
-            colours["green"],
-            colours["off"],
-            colours["off"],
-            colours["off"],
+        [
+            (select_layer(0), colours["orange"]),
+            None,
+            None,
+            None,
+            (select_layer(1), colours["orange"]),
+            None,
+            None,
+            None,
+            (select_layer(2), colours["orange"]),
+            None,
+            None,
+            None,
+            (select_layer(3), colours["green"]),
+            None,
+            None,
+            None
         ]
     )
 ]

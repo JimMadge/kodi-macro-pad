@@ -266,9 +266,9 @@ layers = [
     )
 ]
 
-for key in range(16):
-    @keybow.on_press(keys[key])  # takes argument of key object
-    def press_handler(key):  # This argument is actually the key object!
+for key in keys:
+    @keybow.on_press(key)
+    def press_handler(key):
         action = layers[layer].keys[key.number]
         # Catch elements of Keycode
         if isinstance(action, int):

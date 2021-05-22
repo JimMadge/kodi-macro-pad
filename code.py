@@ -46,7 +46,9 @@ kodi_keymap = {
     "play/pause": Keycode.SPACE,
     "fast forward": Keycode.F,
     "rewind": Keycode.R,
-    "stop": Keycode.X
+    "stop": Keycode.X,
+    "toggle subtitles": Keycode.T,
+    "next subtitle": Keycode.L
 }
 
 # Define action and layer selection keys
@@ -176,41 +178,41 @@ layers = [
         ]
     ),
     # Playback control layer
-    # |        |            |              |      |
-    # | rewind | play/pause | fast forward | stop |
-    # |        |            |              |      |
+    # | toggle subtitles | next subtitle |  | vol+ |
+    # | play/pause       | stop          |  | vol- |
+    # | rewind           | fast forward  |  | mute |
     Layer(
         keys={
-            1: None,
-            2: kodi_keymap["rewind"],
-            3: None,
-            5: None,
-            6: kodi_keymap["play/pause"],
-            7: None,
+            1: kodi_keymap["rewind"],
+            2: kodi_keymap["play/pause"],
+            3: kodi_keymap["toggle subtitles"],
+            5: kodi_keymap["fast forward"],
+            6: kodi_keymap["stop"],
+            7: kodi_keymap["next subtitle"],
             9: None,
-            10: kodi_keymap["fast forward"],
+            10: None,
             11: None,
-            13: None,
-            14: kodi_keymap["stop"],
-            15: None
+            13: kodi_keymap["mute"],
+            14: kodi_keymap["vol-"],
+            15: kodi_keymap["vol+"]
         },
         colours=[
             colours["off"],
-            colours["off"],
             colours["blue"],
-            colours["off"],
             colours["green"],
-            colours["off"],
             colours["yellow"],
-            colours["off"],
-            colours["off"],
-            colours["off"],
+            colours["green"],
             colours["blue"],
+            colours["red"],
+            colours["magenta"],
+            colours["off"],
+            colours["off"],
             colours["off"],
             colours["off"],
             colours["off"],
             colours["red"],
-            colours["off"],
+            colours["cyan"],
+            colours["green"]
         ]
     ),
     # System layer

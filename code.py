@@ -182,11 +182,11 @@ layers = [
             (select_layer(2),              colours["green"]),
             None,
             (
-                (Keycode.CONTROL, Keycode.ALT, Keycode.DOWN_ARROW),
+                (Keycode.CONTROL, Keycode.ALT, Keycode.RIGHT_ARROW),
                 colours["blue"]
             ),
             (
-                (Keycode.CONTROL, Keycode.ALT, Keycode.UP_ARROW),
+                (Keycode.CONTROL, Keycode.ALT, Keycode.LEFT_ARROW),
                 colours["blue"]
             ),
             (select_layer(3),              colours["orange"]),
